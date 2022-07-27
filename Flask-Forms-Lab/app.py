@@ -1,5 +1,8 @@
-from flask import Flask, jsonify, request, render_template, redirect, url_for
+from fileinput import filename
+from flask import Flask, jsonify, request, render_template, redirect, url_for, flash
 import random
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(  # Create a flask app
 	__name__,
@@ -8,23 +11,47 @@ app = Flask(  # Create a flask app
 )
 app.config['SECRET_KEY'] = "icecream"
 
+
+
+#user info
 username = "little_capy"
 password = "capybara809"
 facebook_friends=["pastor-greg","fred09","xx.emo_kidYx", "perryringlet", "rustymetal", "that_one_guy_in_all_of_my_lessons"]
 
 
-@app.route('/', methods=['GET','POST'])  # '/' for the default page
+#image requirements and setup
+UPLOAD_FOLDER = "/home/student/Documents/MEET Summer Y2/Computer Science/Labs/Flask-Forms-Lab/Flask-Forms-Lab/images"
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+	return filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/', methods=['GET', 'POST'])
+def upload():
+	if request.method == 'POST':
+		file = request.files['file']
+		if file is not None and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			return redirect(url_for('login'))
+		else:
+			return redirect(url_for('login'))
+	else:
+		return render_template("upload.html")
+	
+
+
+@app.route('/login', methods=['GET','POST'])  # '/' for the default page
 def login():
 	if request.method == 'GET':
 		return render_template('login.html', wrong=False)
 	else:
 		form_username = request.form['username']
 		form_password = request.form['password']
-		print(form_username, form_password)
 		if (form_username == username and form_password == password):
 			return redirect(url_for('go_to_home'))
 		else:
-			return render_template('login.html', wrong=True)
+			return render_template('login.html', wrong=True, image=filename)
 
 
 @app.route('/home')

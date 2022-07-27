@@ -9,7 +9,7 @@
 
 </head>
   <body>
-    <form action="/" method="post" style="max-width:500px;margin:auto">
+    <form action="/login" method="post" style="max-width:500px;margin:auto">
       <h2>Login to Facebook</h2>
       <div class="input-container">
         <i class="fa fa-user icon"></i>
@@ -24,7 +24,7 @@
       <button type="submit" class="btn">Login</button>
   </form>
   {% if wrong %}
-    <p style="color:white">Your username or password is incorrect</p>
+    <p id="error">Your username or password is incorrect.<br>*starts beatboxing*</p>
   {% endif %}
 </body>
 </html>
