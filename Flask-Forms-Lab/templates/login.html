@@ -8,24 +8,24 @@
 <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 
 </head>
-<body>
+  <body>
+    <form action="/" method="post" style="max-width:500px;margin:auto">
+      <h2>Login to Facebook</h2>
+      <div class="input-container">
+        <i class="fa fa-user icon"></i>
+        <input class="input-field" type="text" placeholder="Username" name="username">
+      </div>
 
-<form action="#" method="#" style="max-width:500px;margin:auto">
-  <h2>Login to Facebook</h2>
-  <div class="input-container">
-    <i class="fa fa-user icon"></i>
-    <input class="input-field" type="text" placeholder="Username" name="username">
-  </div>
-
-  
-  <div class="input-container">
-    <i class="fa fa-key icon"></i>
-    <input class="input-field" type="password" placeholder="Password" name="password">
-  </div>
-
-  <button type="submit" class="btn">Login</button>
-</form>
-
+      
+      <div class="input-container">
+        <i class="fa fa-key icon"></i>
+        <input class="input-field" type="password" placeholder="Password" name="password">
+      </div>
+      <button type="submit" class="btn">Login</button>
+  </form>
+  {% if wrong %}
+    <p style="color:white">Your username or password is incorrect</p>
+  {% endif %}
 </body>
 </html>
 
