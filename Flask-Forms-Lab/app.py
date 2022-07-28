@@ -29,12 +29,12 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def upload():
 	if request.method == 'POST':
-		file = request.files['file']
-		if file is not None and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			return redirect(url_for('login'))
-		else:
+#		file = request.files['file']
+#		if file is not None and allowed_file(file.filename):
+#			filename = secure_filename(file.filename)
+#			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#			return redirect(url_for('login'))
+#		else:
 			return redirect(url_for('login'))
 	else:
 		return render_template("upload.html")
